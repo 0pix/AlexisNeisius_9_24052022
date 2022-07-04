@@ -19,6 +19,7 @@ import { text } from "express";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
+    // upload d'une image avec le bon format
     test("upload an image file", async () => {
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
@@ -57,6 +58,7 @@ describe("Given I am connected as an employee", () => {
       expect(handleChangeFile).toHaveBeenCalled();
     });
 
+    // upload d'une image avec le mauvais format format
     test("upload an image file with bad format", async () => {
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
@@ -99,11 +101,13 @@ describe("Given I am connected as an employee", () => {
         target: { files: [testFile] },
       });
       expect(handleChangeFile).toHaveBeenCalled();
+      // le "1" c'est le "return 1" par rapport à la condition du type de fichier
       expect(handleChangeFile(event)).toBe(1);
     });
   });
 
   describe("When I Submit form", () => {
+    // Test si nous somme redigiré sur la "bills page" après l'envoie
     test("Then, I should be sent on Bills page", () => {
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
@@ -145,8 +149,8 @@ describe("Given I am connected as an employee", () => {
       const bill = mockStore.bills().update();
       expect(getSpy).toHaveBeenCalledTimes(1);
     });
-    //  beforeach
 
+    //  beforeach
     describe("When an error occurs on API", () => {
       beforeEach(() => {
         jest.spyOn(mockStore, "bills");
@@ -165,6 +169,7 @@ describe("Given I am connected as an employee", () => {
         document.body.appendChild(root);
         router();
       });
+      
       test("fetches bills from an API and fails with 404 message error", async () => {
         mockStore.bills.mockImplementationOnce(() =>
           Promise.reject(new Error("Erreur 404"))
@@ -186,95 +191,4 @@ describe("Given I am connected as an employee", () => {
       });
     });
   });
-
-  // test("Then, I should be sent on Bills page", () => {
-  //   Object.defineProperty(window, "localStorage", {
-  //     value: localStorageMock,
-  //   });
-  //   window.localStorage.setItem(
-  //     "user",
-  //     JSON.stringify({
-  //       type: "Employee",
-  //     })
-  //   );
-  //   const onNavigate = (pathname) => {
-  //     document.body.innerHTML = ROUTES({ pathname });
-  //   };
-  //   const html = NewBillUI();
-  //   document.body.innerHTML = html;
-
-  //   const newBills = new NewBill({
-  //     document,
-  //     onNavigate,
-  //     store: mockStore,
-  //     localStorage: window.localStorage,
-  //   });
-
-  //   const handleSubmit = jest.fn(newBills.handleSubmit);
-  //   const newBillForm = screen.getByTestId("form-new-bill");
-  //   newBillForm.addEventListener("submit", handleSubmit);
-
-  //   fireEvent.submit(newBillForm);
-
-  //   expect(handleSubmit).toHaveBeenCalled();
-  //   expect(screen.getAllByText("Mes notes de frais")).toBeTruthy();
-  // });
-
-  // test("Then the new bill is created  ", () => {
-  //   const html = NewBillUI();
-  //   document.body.innerHTML = html;
-
-  //   mockStore.bills = jest.fn().mockImplementation(() => {
-  //     return {
-  //       create: () => {
-  //         return Promise.resolve({});
-  //       },
-  //     };
-  //   });
-
-  //   const onNavigate = (pathname) => {
-  //     document.body.innerHTML = pathname;
-  //   };
-
-  //   const newBill = new NewBill({
-  //     document,
-  //     onNavigate,
-  //     store: mockStore,
-  //     localStorage: window.localStorage,
-  //   });
-
-  //   const bill = {
-  //     email: "a@a",
-  //     type: "Hôtel et logement",
-  //     name: "encore",
-  //     amount: 400,
-  //     date: "2004-04-04",
-  //     vat: 80,
-  //     pct: 20,
-  //     commentary: "séminaire billed",
-  //     fileUrl: "test.pgn",
-  //     fileName: "preview-facture-free-201801-pdf-1.jpg",
-  //     status: "pending",
-  //   };
-
-  //   screen.getByTestId("expense-name").value = bill.name;
-  //   screen.getByTestId("datepicker").value = bill.date;
-  //   screen.getByTestId("amount").value = bill.amount;
-  //   screen.getByTestId("vat").value = bill.vat;
-  //   screen.getByTestId("pct").value = bill.pct;
-  //   screen.getByTestId("commentary").value = bill.commentary;
-  //   newBill.fileName = bill.fileName;
-  //   newBill.fileUrl = bill.fileUrl;
-
-  //   const form = screen.getByTestId("form-new-bill");
-  //   newBill.updateBill = jest.fn();
-  //   const submitForm = jest.fn((e) => {
-  //     newBill.handleSubmit(e);
-  //   });
-
-  //   form.addEventListener("submit", submitForm);
-  //   fireEvent.submit(form);
-
-  //   expect(submitForm).toHaveBeenCalled();
-  // });
 });
