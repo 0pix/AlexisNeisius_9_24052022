@@ -9,3 +9,16 @@ test
 
 5 : 
 - src/_tests_/Bills.js            l 29
+
+
+
+
+### administrateur : 
+```
+utilisateur : admin@test.tld 
+mot de passe : admin
+```
+### employé :
+```
+utilisateur : employee@test.tld
+mot de passe : employee

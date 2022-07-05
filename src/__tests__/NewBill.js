@@ -102,7 +102,7 @@ describe("Given I am connected as an employee", () => {
       });
       expect(handleChangeFile).toHaveBeenCalled();
       // le "1" c'est le "return 1" par rapport à la condition du type de fichier
-      expect(handleChangeFile(event)).toBe(1);
+      expect(handleChangeFile(event)).toBe(false);
     });
   });
 
